@@ -1,10 +1,22 @@
-重点参考文章：http://www.cnblogs.com/xinsheng/p/3897289.html
+重点参考文章：
+http://www.cnblogs.com/xinsheng/p/3897289.html
+http://www.xuebuyuan.com/2129382.html
+http://docs.oracle.com/cd/E19226-01/820-7627/6nisfjmk8/index.html
 
 @BeanParam
 https://jersey.java.net/documentation/latest/jaxrs-resources.html
 
+Rest上传文件
+http://stackoverflow.com/questions/18252990/uploading-file-using-jersey-over-restfull-service-and-the-resource-configuration
+
+WebService框架jersey简单总结
+http://dyygusi.iteye.com/blog/2148029?utm_source=tuicool&utm_medium=referral
+
 
 https://qbgbook.gitbooks.io/spring-boot-reference-guide-zh/content/IV.%20Spring%20Boot%20features/26.2.%20JAX-RS%20and%20Jersey.html
+
+JAX-RS 2.0 API Specification (Rev a)
+https://jax-rs-spec.java.net/nonav/2.0-rev-a/apidocs/index.html
 
 
 /**
@@ -30,8 +42,6 @@ public OrderItemVO getOrderByCode(@PathParam("code") @NotNull String code) {
 	}
 	return null;
 }
-
-
 
 
 /**

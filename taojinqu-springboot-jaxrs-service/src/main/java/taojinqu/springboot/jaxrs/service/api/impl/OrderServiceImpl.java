@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -15,6 +16,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.springframework.stereotype.Component;
 
@@ -45,14 +47,39 @@ public class OrderServiceImpl implements IOrderService {
 		data.put(1003L, o3);
 	}
 
+	// @Override
+	// @POST
+	// @Path("/saveOrder")
+	// @Consumes({ MediaType.APPLICATION_JSON })
+	// public int saveOrder(@BeanParam @NotNull OrderItemVO order) {
+	// System.out.println(order);
+	// data.put(order.getId(), order);
+	// return 1;
+	// }
+
 	@Override
 	@POST
 	@Path("/saveOrder")
-	@Consumes({ MediaType.APPLICATION_JSON })
-	public int saveOrder(@BeanParam @NotNull OrderItemVO order) {
-		System.out.println(order);
-		data.put(order.getId(), order);
-		return 1;
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
+	public Response saveOrder(@BeanParam OrderItemVO order) {
+		return Response.status(200).entity(String.format("saveOrder is called, %s", order)).build();
+	}
+
+	@Override
+	@POST
+	@Path("/saveOrderForm")
+	public Response saveOrderForm(@FormParam("id") Long id, @FormParam("code") String code,
+			@FormParam("platform") String platform) {
+		return Response
+				.ok(String.format("saveOrderForm is called, id : %s, code : %s, platform : %s", id, code, platform))
+				.build();
+	}
+
+	@Override
+	@POST
+	@Path("/saveOrderForm2")
+	public Response saveOrderForm2(@FormParam("order") OrderItemVO order) {
+		return Response.status(200).entity(String.format("saveOrderForm is called, %s", order)).build();
 	}
 
 	@Override

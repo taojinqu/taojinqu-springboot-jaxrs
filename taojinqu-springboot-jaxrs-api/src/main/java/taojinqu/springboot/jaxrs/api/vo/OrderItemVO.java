@@ -2,6 +2,8 @@ package taojinqu.springboot.jaxrs.api.vo;
 
 import java.io.Serializable;
 
+import javax.ws.rs.FormParam;
+
 public class OrderItemVO implements Serializable {
 
 	/**
@@ -9,10 +11,13 @@ public class OrderItemVO implements Serializable {
 	 */
 	private static final long serialVersionUID = -4798848911205156588L;
 
+	@FormParam("id")
 	private Long id;
 
+	@FormParam("code")
 	private String code;
 
+	@FormParam("platform")
 	private String platform;
 
 	public Long getId() {

@@ -11,7 +11,7 @@ public class JerseyConfig extends ResourceConfig {
 	}
 
 	private void registerEndpoints() {
-		packages("taojinqu.springboot.jaxrs.service.api.impl");
+		packages("taojinqu.springboot.jaxrs.service.api.impl", "taojinqu.springboot.jaxrs.service.jaxrs");
 		// register(HelloWorldService.class);
 	}
 }
