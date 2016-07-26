@@ -29,7 +29,7 @@ public class MyResourceTest {
 		Client client = ClientBuilder.newClient();
 		// target = client.target(URI.create(new URL(base,
 		// "endpoint").toExternalForm()));
-		target = client.target(URI.create(new URL("http://127.0.0.1:8080/endpoint/getParams").toExternalForm()));
+		target = client.target(URI.create(new URL("http://127.0.0.1:8080/myResource/getParams").toExternalForm()));
 	}
 
 	@Test

@@ -1,6 +1,7 @@
 package taojinqu.springboot.jaxrs.service.api.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -18,12 +19,11 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.springframework.stereotype.Component;
-
 import taojinqu.springboot.jaxrs.api.IOrderService;
 import taojinqu.springboot.jaxrs.api.vo.OrderItemVO;
+import taojinqu.springboot.jaxrs.api.vo.ProductVO;
 
-@Component("orderService")
+//@Component("orderService")
 @Path("/orderService")
 public class OrderServiceImpl implements IOrderService {
 	public static Map<Long, OrderItemVO> data = new HashMap<Long, OrderItemVO>();
@@ -47,27 +47,25 @@ public class OrderServiceImpl implements IOrderService {
 		data.put(1003L, o3);
 	}
 
-	// @Override
-	// @POST
-	// @Path("/saveOrder")
-	// @Consumes({ MediaType.APPLICATION_JSON })
-	// public int saveOrder(@BeanParam @NotNull OrderItemVO order) {
-	// System.out.println(order);
-	// data.put(order.getId(), order);
-	// return 1;
-	// }
-
+	/**
+	 * JSON字符串参数自动传换成VO
+	 */
 	@Override
-	@POST
-	@Path("/saveOrder")
-	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
-	public Response saveOrder(@BeanParam OrderItemVO order) {
-		return Response.status(200).entity(String.format("saveOrder is called, %s", order)).build();
+	@GET
+	@Path("/saveProduct/{id}")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	public Response saveProduct(
+			@BeanParam /* @NotNull该参数在这里没什么效果，Vo本身不为null,里面的值可能为null */ ProductVO product) {
+		return Response.status(200).entity(String.format("saveOrder is called, %s", product)).build();
 	}
 
+	/**
+	 * 表单参数：无法重用参数
+	 */
 	@Override
 	@POST
 	@Path("/saveOrderForm")
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	public Response saveOrderForm(@FormParam("id") Long id, @FormParam("code") String code,
 			@FormParam("platform") String platform) {
 		return Response
@@ -75,13 +73,20 @@ public class OrderServiceImpl implements IOrderService {
 				.build();
 	}
 
+	/**
+	 * 表单参数：重用参数（相当于直接将表单提交过来的参数写入到VO中）
+	 */
 	@Override
 	@POST
 	@Path("/saveOrderForm2")
-	public Response saveOrderForm2(@FormParam("order") OrderItemVO order) {
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
+	public Response saveOrderForm2(@BeanParam OrderItemVO order) {
 		return Response.status(200).entity(String.format("saveOrderForm is called, %s", order)).build();
 	}
 
+	/**
+	 * 查询参数
+	 */
 	@Override
 	@GET
 	@Path("/getOrderById")
@@ -90,6 +95,9 @@ public class OrderServiceImpl implements IOrderService {
 		return data.get(id);
 	}
 
+	/**
+	 * 路径参数
+	 */
 	@Override
 	@POST
 	@Path("/getOrderByCode/{code}")
@@ -102,5 +110,11 @@ public class OrderServiceImpl implements IOrderService {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void parseData(List data) {
+		// TODO Auto-generated method stub
+
 	}
 }
